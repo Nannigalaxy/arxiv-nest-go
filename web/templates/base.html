@@ -1,0 +1,129 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}} - ArXiv Nest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-2">
+                        <img src="/static/arxiv-logo.svg" alt="arXiv" class="h-8">
+                        <span class="text-xl font-bold text-gray-900 dark:text-white">Nest</span>
+                    </div>
+                    <div class="hidden md:flex space-x-4">
+                        <a href="/" class="nav-link">Browse Papers</a>
+                        <a href="/library" class="nav-link">My Library ({{.LibraryCount}})</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="theme-toggle" title="Toggle theme">
+                        <i data-lucide="sun" class="w-5 h-5" id="theme-icon"></i>
+                    </button>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                        Total Papers: {{.PaperCount}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        {{template "content" .}}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12">
+        <div class="container mx-auto px-4 py-6 text-center text-sm text-gray-600 dark:text-gray-400">
+            <p>ArXiv Nest - A lightweight arXiv paper browser</p>
+            <p class="mt-2">
+                <button hx-post="/admin/refresh" hx-target="#refresh-status"
+                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                    Refresh Papers
+                </button>
+            </p>
+            <div id="refresh-status" class="mt-2"></div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Management
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        // Initialize theme from localStorage or system preference
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            const theme = savedTheme || systemTheme;
+
+            html.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+
+        // Update theme icon
+        function updateThemeIcon(theme) {
+            if (themeToggle) {
+                // Re-create the icon element since Lucide replaces it with SVG
+                themeToggle.innerHTML = `<i data-lucide="${theme === 'dark' ? 'moon' : 'sun'}" class="w-5 h-5"></i>`;
+                lucide.createIcons();
+            }
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        // Initialize theme on page load
+        initTheme();
+
+        // Add click handler
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Typeset MathJax content
+        if (window.MathJax) {
+            MathJax.typesetPromise().catch((err) => console.log('MathJax typeset failed: ' + err.message));
+        }
+    </script>
+</body>
+
+</html>
+{{end}}

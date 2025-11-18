@@ -1,0 +1,91 @@
+.PHONY: build run fetch test clean docker-build docker-run
+
+# Build the application
+build:
+	@echo "Building ArXiv Nest..."
+	@go build -o bin/arxiv-go-nest ./cmd/server
+
+# Run the server
+run:
+	@echo "Starting server..."
+	@go run ./cmd/server server
+
+# Fetch papers manually
+fetch:
+	@echo "Fetching papers from arXiv..."
+	@go run ./cmd/server fetch
+
+# Run database migrations
+migrate:
+	@echo "Running database migrations..."
+	@go run ./cmd/server migrate
+
+# Run tests
+test:
+	@echo "Running tests..."
+	@go test -v ./...
+
+# Clean build artifacts
+clean:
+	@echo "Cleaning build artifacts..."
+	@rm -rf bin/
+	@rm -f data/arxiv.db
+
+# Install dependencies
+deps:
+	@echo "Installing dependencies..."
+	@go mod download
+	@go mod tidy
+
+# Build Docker image
+docker-build:
+	@echo "Building Docker image..."
+	@docker build -t arxiv-go-nest:latest .
+
+# Run Docker container
+docker-run:
+	@echo "Running Docker container..."
+	@docker run -d \
+		-p 8080:8080 \
+		-v $(PWD)/data:/root/data \
+		--name arxiv-go-nest \
+		arxiv-go-nest:latest
+
+# Stop Docker container
+docker-stop:
+	@docker stop arxiv-go-nest
+	@docker rm arxiv-go-nest
+
+# Development mode with auto-reload (requires air)
+dev:
+	@which air > /dev/null || (echo "Installing air..." && go install github.com/cosmtrek/air@latest)
+	@air
+
+# Format code
+fmt:
+	@echo "Formatting code..."
+	@go fmt ./...
+
+# Lint code
+lint:
+	@echo "Linting code..."
+	@which golangci-lint > /dev/null || (echo "golangci-lint not installed" && exit 1)
+	@golangci-lint run
+
+# Show help
+help:
+	@echo "Available targets:"
+	@echo "  build        - Build the application"
+	@echo "  run          - Run the server"
+	@echo "  fetch        - Manually fetch papers from arXiv"
+	@echo "  migrate      - Run database migrations"
+	@echo "  test         - Run tests"
+	@echo "  clean        - Clean build artifacts"
+	@echo "  deps         - Install dependencies"
+	@echo "  docker-build - Build Docker image"
+	@echo "  docker-run   - Run Docker container"
+	@echo "  docker-stop  - Stop Docker container"
+	@echo "  dev          - Run in development mode with auto-reload"
+	@echo "  fmt          - Format code"
+	@echo "  lint         - Lint code"
+	@echo "  help         - Show this help message"

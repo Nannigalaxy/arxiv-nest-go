@@ -1,0 +1,180 @@
+{{template "base" .}}
+
+{{define "content"}}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Browse Papers</h1>
+
+    <!-- Search and Filters -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+        <form action="/search" method="get" class="space-y-4">
+            <div class="flex gap-4">
+                <input type="text" name="q" value="{{.Query}}" placeholder="Search by title, abstract, or author..."
+                    class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                <button type="submit" class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+
+            <div class="flex gap-4">
+                <select name="category"
+                    class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white">
+                    <option value="">All Categories</option>
+                    <option value="cs.AI" {{if eq $.SelectedCategory "cs.AI" }}selected{{end}}>cs.AI - Artificial
+                        Intelligence</option>
+                    <option value="cs.LG" {{if eq $.SelectedCategory "cs.LG" }}selected{{end}}>cs.LG - Machine Learning
+                    </option>
+                    <option value="cs.CV" {{if eq $.SelectedCategory "cs.CV" }}selected{{end}}>cs.CV - Computer Vision
+                    </option>
+                    <option value="cs.CL" {{if eq $.SelectedCategory "cs.CL" }}selected{{end}}>cs.CL - Computation and
+                        Language</option>
+                    <option value="cs.NE" {{if eq $.SelectedCategory "cs.NE" }}selected{{end}}>cs.NE - Neural Computing
+                    </option>
+                    <option value="cs.RO" {{if eq $.SelectedCategory "cs.RO" }}selected{{end}}>cs.RO - Robotics</option>
+                    <option value="cs.CR" {{if eq $.SelectedCategory "cs.CR" }}selected{{end}}>cs.CR - Cryptography
+                    </option>
+                    <option value="cs.DB" {{if eq $.SelectedCategory "cs.DB" }}selected{{end}}>cs.DB - Databases
+                    </option>
+                    <option value="cs.DC" {{if eq $.SelectedCategory "cs.DC" }}selected{{end}}>cs.DC - Distributed
+                        Computing</option>
+                    <option value="cs.SE" {{if eq $.SelectedCategory "cs.SE" }}selected{{end}}>cs.SE - Software
+                        Engineering</option>
+                    <option value="math.CO" {{if eq $.SelectedCategory "math.CO" }}selected{{end}}>math.CO -
+                        Combinatorics</option>
+                    <option value="math.PR" {{if eq $.SelectedCategory "math.PR" }}selected{{end}}>math.PR - Probability
+                    </option>
+                    <option value="math.ST" {{if eq $.SelectedCategory "math.ST" }}selected{{end}}>math.ST - Statistics
+                    </option>
+                    <option value="stat.ML" {{if eq $.SelectedCategory "stat.ML" }}selected{{end}}>stat.ML - Machine
+                        Learning</option>
+                    <option value="quant-ph" {{if eq $.SelectedCategory "quant-ph" }}selected{{end}}>quant-ph - Quantum
+                        Physics</option>
+                </select>
+
+                <button type="submit" class="btn btn-secondary">
+                    Filter
+                </button>
+
+                {{if or .Query .SelectedCategory}}
+                <a href="/" class="btn btn-outline">
+                    Clear Filters
+                </a>
+                {{end}}
+            </div>
+        </form>
+    </div>
+
+    <!-- Results Info -->
+    <div class="mb-4 text-gray-600 dark:text-gray-400">
+        Showing {{len .Papers}} of {{.TotalResults}} papers
+    </div>
+
+    <!-- Papers List -->
+    <div class="space-y-4">
+        {{range .Papers}}
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start">
+                <div class="flex-1">
+                    <h2 class="text-xl font-semibold mb-2">
+                        <a href="{{.PDFUrl}}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">
+                            {{.Title}}
+                        </a>
+                    </h2>
+
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        {{.Authors}}
+                    </p>
+
+                    <p class="text-gray-700 dark:text-gray-300 mb-3 line-clamp-3">
+                        {{.Abstract}}
+                    </p>
+
+                    <div class="flex items-center gap-4 text-sm">
+                        <span class="text-gray-500 dark:text-gray-400">
+                            📅 {{.PublishedAt.Format "Jan 2, 2006"}}
+                        </span>
+                        <span class="text-gray-500 dark:text-gray-400">
+                            🏷️ {{.Categories}}
+                        </span>
+                    </div>
+
+                    <!-- Tags -->
+                    {{if .Tags}}
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        {{range .Tags}}
+                        <span class="tag">{{.Name}}</span>
+                        {{end}}
+                    </div>
+                    {{end}}
+                </div>
+
+                <div class="ml-4 flex flex-col gap-2">
+                    {{if .InLibrary}}
+                    <button hx-post="/library/remove/{{.ID}}" hx-swap="outerHTML" class="btn btn-success w-full"
+                        title="Saved to Library (Click to Remove)">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </button>
+                    {{else}}
+                    <button hx-post="/library/add/{{.ID}}" hx-swap="outerHTML" class="btn btn-outline w-full"
+                        title="Save to Library">
+                        <i data-lucide="bookmark" class="w-4 h-4"></i>
+                    </button>
+                    {{end}}
+
+                    <button
+                        onclick="navigator.clipboard.writeText('{{.Title}}'); const iconTitle = this.querySelector('i'); iconTitle.setAttribute('data-lucide', 'check'); lucide.createIcons(); setTimeout(() => { iconTitle.setAttribute('data-lucide', 'clipboard'); lucide.createIcons(); }, 2000)"
+                        class="btn btn-outline text-center w-full" title="Copy Title">
+                        <i data-lucide="clipboard" class="w-4 h-4"></i>
+                    </button>
+
+                    <button
+                        onclick="navigator.clipboard.writeText('{{.PDFUrl}}'); const iconLink = this.querySelector('i'); iconLink.setAttribute('data-lucide', 'check'); lucide.createIcons(); setTimeout(() => { iconLink.setAttribute('data-lucide', 'link'); lucide.createIcons(); }, 2000)"
+                        class="btn btn-outline text-center w-full" title="Copy Link">
+                        <i data-lucide="link" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-12 text-center">
+            <p class="text-gray-500 dark:text-gray-400 text-lg">No papers found</p>
+            {{if or .Query .SelectedTag}}
+            <a href="/" class="btn btn-primary mt-4 inline-block">Clear Filters</a>
+            {{else}}
+            <p class="text-gray-400 dark:text-gray-500 mt-2">Try refreshing papers from arXiv</p>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
+
+    <!-- Pagination -->
+    {{if gt .TotalPages 1}}
+    <div class="mt-8 flex justify-center gap-2">
+        {{if gt .CurrentPage 1}}
+        <a href="?page={{sub .CurrentPage 1}}{{if .Query}}&q={{.Query}}{{end}}{{if .SelectedTag}}&tag={{.SelectedTag}}{{end}}"
+            class="btn btn-outline">
+            ← Previous
+        </a>
+        {{end}}
+
+        <form action="/" method="GET" class="flex items-center gap-2">
+            {{if .Query}}<input type="hidden" name="q" value="{{.Query}}">{{end}}
+            {{if .SelectedTag}}<input type="hidden" name="tag" value="{{.SelectedTag}}">{{end}}
+            {{if .SelectedCategory}}<input type="hidden" name="category" value="{{.SelectedCategory}}">{{end}}
+
+            <span class="text-gray-700 dark:text-gray-300">Page</span>
+            <input type="number" name="page" value="{{.CurrentPage}}" min="1" max="{{.TotalPages}}"
+                class="w-16 px-2 py-1 text-center border rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                onchange="this.form.submit()">
+            <span class="text-gray-700 dark:text-gray-300">of {{.TotalPages}}</span>
+        </form>
+
+        {{if lt .CurrentPage .TotalPages}}
+        <a href="?page={{add .CurrentPage 1}}{{if .Query}}&q={{.Query}}{{end}}{{if .SelectedTag}}&tag={{.SelectedTag}}{{end}}"
+            class="btn btn-outline">
+            Next →
+        </a>
+        {{end}}
+    </div>
+    {{end}}
+</div>
+{{end}}
