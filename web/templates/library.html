@@ -7,29 +7,29 @@
     <!-- Search and Filters -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
         <form action="/library" method="get" class="space-y-4">
-            <div class="flex gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
                 <input type="text" name="q" value="{{.Query}}" placeholder="Search your library..."
                     class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary md:w-auto">
                     Search
                 </button>
             </div>
 
-            <div class="flex gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
                 <select name="tag"
-                    class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white">
+                    class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white w-full md:w-auto">
                     <option value="">All Tags</option>
                     {{range .Tags}}
                     <option value="{{.Name}}" {{if eq $.SelectedTag .Name}}selected{{end}}>{{.Name}}</option>
                     {{end}}
                 </select>
 
-                <button type="submit" class="btn btn-secondary">
+                <button type="submit" class="btn btn-secondary w-full md:w-auto">
                     Filter
                 </button>
 
                 {{if or .Query .SelectedTag}}
-                <a href="/library" class="btn btn-outline">
+                <a href="/library" class="btn btn-outline w-full md:w-auto text-center">
                     Clear Filters
                 </a>
                 {{end}}

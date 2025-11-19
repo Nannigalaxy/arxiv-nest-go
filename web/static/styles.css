@@ -290,6 +290,17 @@ textarea:focus {
     ring-color: var(--arxiv-red);
 }
 
+/* Select Dropdown Fix */
+select option {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] select option {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
 /* Logo Text */
 .logo-text {
     color: var(--arxiv-red);
@@ -384,6 +395,6 @@ textarea:focus {
 }
 
 /* Pagination - Selected Page */
-.bg-red-800 {
+span.bg-red-800 {
     color: white !important;
 }
