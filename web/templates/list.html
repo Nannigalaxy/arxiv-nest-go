@@ -168,28 +168,56 @@
 
     <!-- Pagination -->
     {{if gt .TotalPages 1}}
-    <div class="mt-8 flex justify-center gap-2">
+    <div class="mt-8 flex flex-wrap justify-center items-center gap-2">
         {{if gt .CurrentPage 1}}
-        <a href="?page={{sub .CurrentPage 1}}{{if .Query}}&q={{.Query}}{{end}}{{if .SelectedTag}}&tag={{.SelectedTag}}{{end}}"
+        <a href="?page={{sub .CurrentPage 1}}{{if .Query}}&q={{.Query}}{{end}}{{if .SelectedTag}}&tag={{.SelectedTag}}{{end}}{{if .SelectedCategory}}&category={{.SelectedCategory}}{{end}}"
             class="btn btn-outline">
             ← Previous
         </a>
         {{end}}
 
-        <form action="/" method="GET" class="flex items-center gap-2">
-            {{if .Query}}<input type="hidden" name="q" value="{{.Query}}">{{end}}
-            {{if .SelectedTag}}<input type="hidden" name="tag" value="{{.SelectedTag}}">{{end}}
-            {{if .SelectedCategory}}<input type="hidden" name="category" value="{{.SelectedCategory}}">{{end}}
+        {{/* Show page numbers 1-10 or up to TotalPages */}}
+        {{$maxPages := 10}}
+        {{$totalPages := .TotalPages}}
+        {{$currentPage := .CurrentPage}}
+        {{$query := .Query}}
+        {{$selectedTag := .SelectedTag}}
+        {{$selectedCategory := .SelectedCategory}}
 
-            <span class="text-gray-700 dark:text-gray-300">Page</span>
-            <input type="number" name="page" value="{{.CurrentPage}}" min="1" max="{{.TotalPages}}"
-                class="w-16 px-2 py-1 text-center border rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
-                onchange="this.form.submit()">
-            <span class="text-gray-700 dark:text-gray-300">of {{.TotalPages}}</span>
-        </form>
+        {{/* Determine how many page numbers to show */}}
+        {{$pagesToShow := $maxPages}}
+        {{if lt $totalPages $maxPages}}
+        {{$pagesToShow = $totalPages}}
+        {{end}}
+
+        {{/* Show page numbers */}}
+        {{range $i := until $pagesToShow}}
+        {{$pageNum := add $i 1}}
+        {{if eq $pageNum $currentPage}}
+        <span class="px-4 py-2 bg-red-800 text-white rounded-lg font-medium">{{$pageNum}}</span>
+        {{else}}
+        <a href="?page={{$pageNum}}{{if $query}}&q={{$query}}{{end}}{{if $selectedTag}}&tag={{$selectedTag}}{{end}}{{if $selectedCategory}}&category={{$selectedCategory}}{{end}}"
+            class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            {{$pageNum}}
+        </a>
+        {{end}}
+        {{end}}
+
+        {{/* Show ellipsis and total pages if there are more than 10 pages */}}
+        {{if gt $totalPages $maxPages}}
+        <span class="text-gray-500 dark:text-gray-400">...</span>
+        {{if eq $currentPage $totalPages}}
+        <span class="px-4 py-2 bg-red-800 text-white rounded-lg font-medium">{{$totalPages}}</span>
+        {{else}}
+        <a href="?page={{$totalPages}}{{if $query}}&q={{$query}}{{end}}{{if $selectedTag}}&tag={{$selectedTag}}{{end}}{{if $selectedCategory}}&category={{$selectedCategory}}{{end}}"
+            class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            {{$totalPages}}
+        </a>
+        {{end}}
+        {{end}}
 
         {{if lt .CurrentPage .TotalPages}}
-        <a href="?page={{add .CurrentPage 1}}{{if .Query}}&q={{.Query}}{{end}}{{if .SelectedTag}}&tag={{.SelectedTag}}{{end}}"
+        <a href="?page={{add .CurrentPage 1}}{{if .Query}}&q={{.Query}}{{end}}{{if .SelectedTag}}&tag={{.SelectedTag}}{{end}}{{if .SelectedCategory}}&category={{.SelectedCategory}}{{end}}"
             class="btn btn-outline">
             Next →
         </a>

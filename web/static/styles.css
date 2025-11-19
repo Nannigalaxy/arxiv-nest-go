@@ -171,6 +171,7 @@ nav {
 .nav-link:hover {
     color: var(--arxiv-red);
     background-color: var(--bg-tertiary);
+    text-decoration: none;
 }
 
 /* Tags */
@@ -222,6 +223,22 @@ a {
 
 a:hover {
     color: var(--arxiv-dark-red);
+    text-decoration: underline;
+}
+
+/* Paper Title Links */
+.paper-card h2 a {
+    color: #1e3a8a !important;
+    /* Dark blue for light mode */
+}
+
+[data-theme="dark"] .paper-card h2 a {
+    color: #60a5fa !important;
+    /* Lighter blue for dark mode */
+}
+
+.paper-card h2 a:hover {
+    color: #1e40af !important;
     text-decoration: underline;
 }
 
@@ -364,4 +381,9 @@ textarea:focus {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Pagination - Selected Page */
+.bg-red-800 {
+    color: white !important;
 }

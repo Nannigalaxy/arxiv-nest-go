@@ -43,8 +43,8 @@ A lightweight, self-hosted Go application for fetching, indexing, and browsing a
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/ngx/arxiv-go-nest.git
-   cd arxiv-go-nest
+   git clone https://github.com/Nannigalaxy/arxiv-nest-go.git
+   cd arxiv-nest-go
    ```
 
 2. **Install dependencies**:
@@ -117,13 +117,13 @@ ui:
 
 ```bash
 # Start the web server (default command)
-./bin/arxiv-go-nest server
+./bin/arxiv-nest-go server
 
 # Manually fetch papers from arXiv
-./bin/arxiv-go-nest fetch
+./bin/arxiv-nest-go fetch
 
 # Run database migrations
-./bin/arxiv-go-nest migrate
+./bin/arxiv-nest-go migrate
 ```
 
 ### Web Interface
@@ -173,7 +173,7 @@ Create a `docker-compose.yml`:
 version: '3.8'
 
 services:
-  arxiv-go-nest:
+  arxiv-nest-go:
     build: .
     ports:
       - "8080:8080"
@@ -196,7 +196,7 @@ docker-compose up -d
 ### Project Structure
 
 ```
-arxiv-go-nest/
+arxiv-nest-go/
 ├── cmd/
 │   └── server/
 │       └── main.go              # Entry point

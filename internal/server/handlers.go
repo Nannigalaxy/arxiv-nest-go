@@ -386,7 +386,7 @@ func (h *Handler) HandleRefresh(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Successfully fetched and stored %d papers", count)
+	fmt.Fprintf(w, `<span class="text-green-600 dark:text-green-400">✓ Successfully fetched and stored %d papers</span>`, count)
 }
 
 // getIntParam extracts an integer parameter from the URL query string

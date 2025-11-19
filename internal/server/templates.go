@@ -42,6 +42,13 @@ func NewTemplates() (*template.Template, error) {
 		"ge": func(a, b int) bool {
 			return a >= b
 		},
+		"until": func(n int) []int {
+			result := make([]int, n)
+			for i := 0; i < n; i++ {
+				result[i] = i
+			}
+			return result
+		},
 	}
 
 	// Parse templates with helper functions

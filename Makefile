@@ -3,7 +3,7 @@
 # Build the application
 build:
 	@echo "Building ArXiv Nest..."
-	@go build -o bin/arxiv-go-nest ./cmd/server
+	@go build -o bin/arxiv-nest-go ./cmd/server
 
 # Run the server
 run:
@@ -40,7 +40,7 @@ deps:
 # Build Docker image
 docker-build:
 	@echo "Building Docker image..."
-	@docker build -t arxiv-go-nest:latest .
+	@docker build -t arxiv-nest-go:latest .
 
 # Run Docker container
 docker-run:
@@ -48,13 +48,13 @@ docker-run:
 	@docker run -d \
 		-p 8080:8080 \
 		-v $(PWD)/data:/root/data \
-		--name arxiv-go-nest \
-		arxiv-go-nest:latest
+		--name arxiv-nest-go \
+		arxiv-nest-go:latest
 
 # Stop Docker container
 docker-stop:
-	@docker stop arxiv-go-nest
-	@docker rm arxiv-go-nest
+	@docker stop arxiv-nest-go
+	@docker rm arxiv-nest-go
 
 # Docker Compose - Start
 compose-up:
