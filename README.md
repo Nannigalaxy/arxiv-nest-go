@@ -1,9 +1,10 @@
-# ArXiv Nest 📚
+# ArXiv Nest <img src="https://public.boxcloud.com/api/2.0/files/804102562135/content?preview=true&version=860286523735&access_token=1!PqtGHd7XHJmtZowmy0t_fzZKoTymAvQl-gbwetYiTvvWIx8luWZH_NED-86Kd6FitnfSfgjYDNjbAg_XWpO2JpZrFfE3Q02XAm2KdB2SUdheZ4K39u6EmDKSdBWT4a-wq6AyGlSupCaAdU9Nl5caBMrfl2kq-sB9DYbyCGOjYn3kDK0iIH7qkXdcH4rfx92zYn_6HJnKrDgegAFtWXHcfGUID1rhKMYkMzkXLzW5dconW_MyZuokPOa_C7adsKBJFIjX01wNAPIJta3uBTAVfn3azOzPrUAUhn5R6YGo0m0pxJyIlZSNgn-jlMU3cx8xUr8tvYMKuz53cqwTcFngHSrNrL-1Y_IzHY1IdCgKggV_1r8M4tfFiIzhzVBkCUM5SomL34EH-v1ydnoPWMOzevC6cVdEpEuwOMcdd4HS-KiK1Rw6nISug5mFghZvPXIxWgzDR8hDTDX-z08a9RBEUrRZRHMiWyCcSYjj2rN0sxZGOgUR4OQQ9uWhv1kSeUuV8KsCYuq5VH1ctXtDWBqJGf42dx0sLLe-lZkQ-WPOf5mZ1taKcP73ZpipIpr_bp4vP7g4uRZO1PbZh7rxXtT3Mc5Y1zX_vvlqcmVKcelmnJ61LWJhVNSKj7GIjpCfq1WfSvck3epUT4cAJym9SrFo4rbiYVF80ptnUg0i2KGRzJg.&shared_link=https%3A%2F%2Fcornell.app.box.com%2Fv%2Farxiv-logomark-small-svg&box_client_name=box-content-preview&box_client_version=3.15.0" height="30" alt="diagram">
+
 
 A lightweight, self-hosted Go application for fetching, indexing, and browsing arXiv papers. Built with simplicity and minimalism in mind.
 
   
-[![Vibe Coded](https://img.shields.io/badge/Vibe-Coded-A00ASA?style=for-the-badge)](https://twitter.com/search?q=vibecoding)
+[![Vibe Coded](https://img.shields.io/badge/Vibe-Coded-4169E1?style=for-the-badge)](#) 🤝 [![Human Verified](https://img.shields.io/badge/Human-Verified-A00ASA?style=for-the-badge)](#) 
 
 ## Screenshots
 
