@@ -2,6 +2,8 @@
 
 A lightweight, self-hosted Go application for fetching, indexing, and browsing arXiv papers. Built with simplicity and minimalism in mind.
 
+  
+[![Vibe Coded](https://img.shields.io/badge/Vibe-Coded-A00ASA?style=for-the-badge)](https://twitter.com/search?q=vibecoding)
 ## Features
 
 - 🔍 **Fetch & Index**: Automatically fetch papers from arXiv based on categories and keywords
