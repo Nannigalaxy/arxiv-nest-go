@@ -298,24 +298,3 @@ MIT License - see LICENSE file for details
 ## Acknowledgments
 
 - Inspired by [Arxiv Sanity Preserver](https://github.com/karpathy/arxiv-sanity-preserver)
-- Built with the Unix philosophy: do one thing well
-- Follows KISS (Keep It Simple, Stupid) and DRY (Don't Repeat Yourself) principles
-
-## Roadmap
-
-### Phase 2 (Future)
-
-- [ ] Recommendations based on TF-IDF similarity
-- [ ] Full-text search with indexing
-- [ ] Export library to CSV/JSON/BibTeX
-- [ ] OPML/JSON feed for RSS readers
-- [ ] REST API
-- [ ] Email/Slack notifications
-
-## Support
-
-For issues, questions, or contributions, please open an issue on GitHub.
-
----
-
-**Made with ❤️ and Go**
