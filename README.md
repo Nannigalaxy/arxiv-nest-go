@@ -4,16 +4,31 @@ A lightweight, self-hosted Go application for fetching, indexing, and browsing a
 
   
 [![Vibe Coded](https://img.shields.io/badge/Vibe-Coded-A00ASA?style=for-the-badge)](https://twitter.com/search?q=vibecoding)
+
+## Screenshots
+
+### Desktop Interface
+![ArXiv Nest Web Interface](docs/screenshots/web_screenshot.png)
+
+### Mobile Interface
+![ArXiv Nest Mobile Interface](docs/screenshots/mobile_screenshot.png)
+
 ## Features
 
 - 🔍 **Fetch & Index**: Automatically fetch papers from arXiv based on categories and keywords
 - 📖 **Browse**: Clean, responsive UI for browsing papers
+- 📱 **Mobile Ready**: Fully responsive design with hamburger menu and touch-friendly controls
 - 💾 **Library**: Save papers to your personal library
 - 🏷️ **Tags**: Organize papers with custom tags
 - ✅ **Read Status**: Track which papers you've read
 - 🔎 **Search**: Search by title, abstract, or author
+- ⚡ **Fast & Interactive**: HTMX-powered interactions with instant feedback (Toasts, NProgress)
+- ⌨️ **Keyboard Shortcuts**: Power user controls for navigation and search
+- 🌙 **Dark Mode**: System-aware light/dark theme with persistent toggle
 - 📄 **Single Binary**: Deploy as a single executable with SQLite database
 - 🐳 **Docker**: Run in a container with one command
+
+
 
 ## Quick Start
 
@@ -119,6 +134,17 @@ ui:
 - **Add Tags**: On the paper detail page, add custom tags
 - **Mark as Read**: Toggle read status for papers in your library
 - **Search**: Use the search bar to find papers by keyword
+- **Theme**: Toggle between Light and Dark mode (top right)
+- **Go to Top**: Use the floating arrow button to scroll to top
+
+### Keyboard Shortcuts
+
+| Key | Action |
+| --- | --- |
+| `/` | Focus Search Bar |
+| `Esc` | Blur Input / Close Menus |
+| `j` | Scroll Down |
+| `k` | Scroll Up |
 
 ### Background Fetching
 
@@ -248,7 +274,9 @@ make dev
 - **Web Framework**: chi router
 - **Templates**: html/template (stdlib)
 - **CSS**: Tailwind CSS (CDN)
+- **Icons**: Lucide Icons
 - **Interactivity**: HTMX
+- **UX**: NProgress, Toast Notifications
 - **Dependencies**: Minimal (see go.mod)
 
 ## Contributing

@@ -1,4 +1,4 @@
-.PHONY: build run fetch test clean docker-build docker-run
+.PHONY: build run fetch test clean docker-build docker-run compose-restart
 
 # Build the application
 build:
@@ -56,6 +56,26 @@ docker-stop:
 	@docker stop arxiv-go-nest
 	@docker rm arxiv-go-nest
 
+# Docker Compose - Start
+compose-up:
+	@echo "Starting with Docker Compose..."
+	@docker compose up -d
+
+# Docker Compose - Stop
+compose-down:
+	@echo "Stopping Docker Compose..."
+	@docker compose down
+
+# Docker Compose - Logs
+compose-logs:
+	@docker compose logs -f
+
+# Docker Compose - Restart (rebuild and up)
+compose-restart:
+	@echo "Restarting Docker Compose with rebuild..."
+	@docker compose down
+	@docker compose up -d --build
+
 # Development mode with auto-reload (requires air)
 dev:
 	@which air > /dev/null || (echo "Installing air..." && go install github.com/cosmtrek/air@latest)
@@ -85,6 +105,10 @@ help:
 	@echo "  docker-build - Build Docker image"
 	@echo "  docker-run   - Run Docker container"
 	@echo "  docker-stop  - Stop Docker container"
+	@echo "  compose-up   - Start with Docker Compose"
+	@echo "  compose-down - Stop Docker Compose"
+	@echo "  compose-restart - Rebuild and restart Docker Compose"
+	@echo "  compose-logs - View Docker Compose logs"
 	@echo "  dev          - Run in development mode with auto-reload"
 	@echo "  fmt          - Format code"
 	@echo "  lint         - Lint code"

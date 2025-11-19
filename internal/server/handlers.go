@@ -226,9 +226,9 @@ func (h *Handler) HandleAddToLibrary(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("HX-Trigger", "libraryUpdated")
+	w.Header().Set("HX-Trigger", `{"libraryUpdated": true, "showToast": {"message": "Saved to library", "type": "success"}}`)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, `<button hx-post="/library/remove/%s" hx-swap="outerHTML" class="btn btn-success w-full" title="Saved to Library (Click to Remove)"><i data-lucide="check" class="w-4 h-4"></i></button><script>lucide.createIcons();</script>`, id)
+	fmt.Fprintf(w, `<button hx-post="/library/remove/%s" hx-swap="outerHTML" class="btn btn-success flex-1 md:flex-none md:w-full" title="Saved to Library (Click to Remove)"><i data-lucide="check" class="w-4 h-4"></i></button><script>lucide.createIcons();</script>`, id)
 }
 
 // HandleRemoveFromLibrary removes a paper from the library (HTMX endpoint)
@@ -241,9 +241,9 @@ func (h *Handler) HandleRemoveFromLibrary(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	w.Header().Set("HX-Trigger", "libraryUpdated")
+	w.Header().Set("HX-Trigger", `{"libraryUpdated": true, "showToast": {"message": "Removed from library", "type": "info"}}`)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, `<button hx-post="/library/add/%s" hx-swap="outerHTML" class="btn btn-outline w-full" title="Save to Library"><i data-lucide="bookmark" class="w-4 h-4"></i></button><script>lucide.createIcons();</script>`, id)
+	fmt.Fprintf(w, `<button hx-post="/library/add/%s" hx-swap="outerHTML" class="btn btn-outline flex-1 md:flex-none md:w-full" title="Save to Library"><i data-lucide="bookmark" class="w-4 h-4"></i></button><script>lucide.createIcons();</script>`, id)
 }
 
 // HandleToggleRead toggles the read status (HTMX endpoint)
